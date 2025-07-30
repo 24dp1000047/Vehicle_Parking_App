@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Admin Dashboard</title>
+    <link rel="stylesheet" href="static/style.css">
+</head>
+
+<body>
+    <div class="navbar"> <!-- ye navebar ke liye code hai -->
+        <span class="welcome-admin">Welcome to Admin</span>
+        <div class="nav-links">
+            <a href="{{ url_for('admin_dashboard') }}">Home</a>
+            <a href="{{ url_for('admin_users') }}">Users</a>
+            <a href="{{ url_for('admin_search') }}">Search</a>
+            <a href="{{ url_for('admin_summary') }}">Summary</a>
+            <a href="{{ url_for('logout') }}">Logout</a>
+        </div>
+        <a href="{{ url_for('edit_profile') }}" class="edit-profile">Edit Profile</a>
+    </div>
+    <div class="main"> <!-- ye main content ke liye code hai -->
+        <div class="section-title">Parking Lots</div>
+        <div class="lots-container">
+            {% for lot in lots %}
+            <div class="lot-card">
+                <div class="lot-title">Parking#{{ lot.id }}{% if lot.prime_location_name %} - {{ lot.prime_location_name
+                    }}{% endif %}</div>
+                <div class="lot-details">
+                    <b>Price:</b> ₹{{ lot.price }}<br>
+                    <b>Address:</b> {{ lot.address }}<br>
+                </div>
+                <div class="lot-actions">
+                    <a href="{{ url_for('admin_edit_lot', lot_id=lot.id) }}">Edit</a>
+                    <form action="{{ url_for('admin_delete_lot', lot_id=lot.id) }}" method="post" style="display:inline;">
+                        <button type="submit" class="delete-btn" >Delete</button>
+                    </form>
+                </div>
+                <div class="spot-status">
+                    (Occupied: {{ lot.occupied_count }}/{{ lot.maximum_number_of_spots }})
+                </div>
+                <div class="spot-grid">
+                    {% for spot in lot.spots %}
+                    <a href="{{ url_for('admin_spot_details', spot_id=spot.id) }}" title="View Spot Details">
+                        <div class="spot {% if spot.is_occupied %}occupied{% else %}available{% endif %}">
+                            {% if spot.is_occupied %}O{% else %}A{% endif %}
+                        </div>
+                    </a>
+                    {% endfor %}
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        <a href="{{ url_for('add_lot') }}" class="btn">+ Add Lot</a>
+    </div>
+</body>
+
+</html>
