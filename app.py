@@ -4,11 +4,12 @@ from models.models import db, User
 from werkzeug.security import generate_password_hash
 from datetime import date
 
+
 app = Flask(__name__)
 
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///parking.sqlite3'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///parking_database.sqlite3'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-app.secret_key = "quiz_master"
+app.secret_key = "jump_to_the_moon"
 db.init_app(app)
 
 with app.app_context():
@@ -19,10 +20,14 @@ with app.app_context():
 
         hashed_password = generate_password_hash('admin', method='pbkdf2:sha256')
 
-        admin_user = User(email='admin@gmail.com', password=hashed_password, fullname='Admin', address='Admin', pin_code='123456', role='admin')
+        admin_user = User(email='admin123@gmail.com',
+        password=hashed_password,
+        fullname='admin_123',
+        address='New Delhi',
+        pin_code='181818',
+        role='admin')
         db.session.add(admin_user)
         db.session.commit()
-        print("Admin user created")
 
 from controllers.routes import *
 
