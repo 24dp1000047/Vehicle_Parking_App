@@ -1,0 +1,111 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f4;
+}
+
+.navbar {
+    background-color: #75dff5;
+    color: white;
+    padding: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.nav-links a {
+    color: rgb(16, 5, 5);
+    text-decoration: none;
+    margin: 0 15px;
+}
+
+.nav-links a:hover {
+    text-decoration: underline;
+}
+
+.welcome-admin {
+    font-size: 1.2em;
+    color: green;
+}
+
+.main {
+    padding: 20px;
+}
+
+.section-title {
+    font-size: 1.5em;
+    margin-bottom: 20px;
+}
+
+.lots-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+
+.lot-card {
+    background-color: white;
+    border-radius: 5px;
+    padding: 15px;
+    width: calc(33.333% - 40px);
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.lot-title {
+    font-size: 1.2em;
+    margin-bottom: 10px;
+}
+
+.lot-details b {
+    font-weight: bold;
+}
+
+.lot-actions a {
+    margin-right: 10px;
+}
+
+.delete-btn {
+    color: red;
+}
+
+.spot-status {
+    margin-top: 10px;
+}
+
+.spot-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 5px;
+    margin-top: 10px;
+}
+
+.spot {
+    width: 30px;
+    height: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 3px;
+    background-color: #e0e0e0;
+}
+
+.spot.occupied {
+    background-color: #ff6666;
+    color: white;
+}
+
+.spot.available {
+    background-color: #66ff66;
+    color: black;
+}
+
+.btn {
+    display: inline-block;
+    padding: 10px 15px;
+    background-color: #75dff5;
+    text-decoration: none;
+    color: white;
+    border-radius: 5px;
+    margin-top: 20px;
+}
