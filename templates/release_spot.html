@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Release Parking Spot</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+    <div class="container mt-4" style="max-width: 400px;">
+        <h4 class="text-center mb-3" style="background:#ffe082; border-radius:8px; padding:8px;">Release the parking spot</h4>
+        <form method="POST">
+            <div class="mb-3">
+                <label for="spot_id" class="form-label">Spot ID:</label>
+                <input type="text" class="form-control" id="spot_id" name="spot_id" value="{{ spot.spot_number }}" readonly>
+            </div>
+            <div class="mb-3">
+                <label for="lot_id" class="form-label">Lot ID:</label>
+                <input type="text" class="form-control" id="lot_id" name="lot_id" value="{{ lot.id }}" readonly>
+            </div>
+            <div class="mb-3">
+                <label for="user_id" class="form-label">User ID:</label>
+                <input type="text" class="form-control" id="user_id" name="user_id" value="{{ user.id }}" readonly>
+            </div>
+            <div class="mb-3">
+                <label for="vehicle_number" class="form-label">Vehicle Number:</label>
+                <input type="text" class="form-control" id="vehicle_number" name="vehicle_number" value="{{ reservation.vehicle_number }}" readonly>
+            </div>
+            <div class="mb-3">
+                <label for="release_time" class="form-label">Release Time:</label>
+                <input type="text" class="form-control" id="release_time" name="release_time" value="{{ release_time }}" readonly>
+            </div>
+            <button type="submit" class="btn btn-primary">Release</button>
+            <a href="{{ url_for('user_dashboard') }}" class="btn btn-secondary">Cancel</a>
+        </form>
+    </div>
+</body>
+</html>

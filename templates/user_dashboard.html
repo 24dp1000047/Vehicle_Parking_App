@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>User Dashboard</title>
+    <style>
+        body {
+            background: #f8f9fa;
+            font-family: Arial, sans-serif;
+        }
+
+        .header {
+            background: #4caf50;
+            color: #fff;
+            padding: 16px;
+            border-radius: 12px;
+            margin: 24px auto 16px auto;
+            max-width: 900px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .header a {
+            color: #fff;
+            text-decoration: underline;
+            margin-left: 12px;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: auto;
+            background: #fff;
+            border-radius: 12px;
+            padding: 24px;
+        }
+
+        h2 {
+            color: #1976d2;
+            margin-bottom: 10px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 24px;
+        }
+
+        th,
+        td {
+            border: 1px solid #bbb;
+            padding: 8px 10px;
+            text-align: center;
+        }
+
+        th {
+            background: #e3f2fd;
+        }
+
+        .btn {
+            padding: 5px 16px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        .btn-book {
+            background: #4caf50;
+            color: #fff;
+        }
+
+        .btn-release {
+            background: #ff9800;
+            color: #fff;
+        }
+
+        .btn-cancel {
+            background: #90caf9;
+            color: #333;
+        }
+
+        .badge-success {
+            background: #c8e6c9;
+            color: #388e3c;
+            padding: 4px 10px;
+            border-radius: 5px;
+        }
+
+        .search-label {
+            color: #e53935;
+            font-size: 1rem;
+        }
+
+        .search-row {
+            margin-bottom: 18px;
+        }
+
+        input[type="text"] {
+            padding: 6px;
+            border-radius: 4px;
+            border: 1px solid #bbb;
+        }
+
+        .section-title {
+            color: #1976d2;
+            margin: 18px 0 8px 0;
+            font-size: 1.1rem;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="header">
+        <div>
+            <span>Welcome to {{ user.fullname or 'User' }}</span>
+            <a href="{{ url_for('user_dashboard') }}">Home</a> |
+            <a href="{{ url_for('user_dashboard') }}">Summary</a> |
+            <a href="{{ url_for('logout') }}">Logout</a>
+        </div>
+        <a href="{{ url_for('edit_profile') }}" class="btn btn-cancel">Edit Profile</a>
+    </div>
+    <div class="container">
+        <h2>Recent parking history</h2>
+        <table style="width:100%; border-collapse:collapse;">
+            <thead>
+                <tr style="background:#e3f2fd;">
+                    <th>ID</th>
+                    <th>Location</th>
+                    <th>Vehicle No</th>
+                    <th>Timestamp</th>
+                    <th>Total Cost</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for r in reservations %}
+                <tr>
+                    <td>{{ r.id }}</td>
+                    <td>
+                        {{ r.lot.prime_location_name if r.lot else 'N/A' }}
+                    </td>
+                    <td>{{ r.vehicle_no }}</td>
+                    <td>{{ r.timestamp.strftime('%Y-%m-%d %H:%M') }}</td>
+                    <td>{{ r.total_cost }}</td>
+                    <td>
+                        {% if r.status == 'parked' %}
+                        <a href="{{ url_for('release_parking', reservation_id=r.id) }}"
+                            style="background:#ff9800;color:#fff;padding:4px 10px;border-radius:5px;text-decoration:none;">Release</a>
+                        {% else %}
+                        <span style="background:#c8e6c9;color:#388e3c;padding:4px 10px;border-radius:5px;">Parked
+                            Out</span>
+                        {% endif %}
+                    </td>
+                </tr>
+                {% else %}
+                {% endfor %}
+            </tbody>
+        </table>
+        <h2>Available Parking Spots</h2>
+        <form method="get" action="{{ url_for('user_search') }}" class="search-row">
+            <label class="search-label">Search parking @location/pin code :</label>
+            <input type="text" name="search" placeholder="Dadar Road" value="{{ search or '' }}">
+            <button type="submit" class="btn btn-book">Search</button>
+        </form>
+    </div>
+</body>
+
+</html>
